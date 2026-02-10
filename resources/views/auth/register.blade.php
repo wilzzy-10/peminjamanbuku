@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar - Aplikasi Peminjaman Buku</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .register-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .input-focus:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navigation Bar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2 group">
+                        <div class="bg-gradient-to-br from-blue-600 to-purple-600 p-2 rounded-lg">
+                            <i class="fas fa-book text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-gray-800 group-hover:text-blue-600 transition">Perpustakaan</span>
+                    </a>
+                </div>
+
+                <!-- Center Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-600 hover:text-blue-600 font-medium transition">Beranda</a>
+                    <a href="{{ route('books.index') }}" class="text-gray-600 hover:text-blue-600 font-medium transition">Koleksi Buku</a>
+                </div>
+
+                <!-- Auth Buttons (Right Top) -->
+                <div class="flex items-center space-x-3">
+                    <a href="{{ route('login') }}" class="px-4 py-2 text-blue-600 font-semibold hover:text-blue-700 transition">
+                        Login
+                    </a>
+                    <a href="{{ route('register') }}" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition transform hover:scale-105 border-b-2 border-purple-700">
+                        Daftar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Register Section -->
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-md">
+            <!-- Card -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <!-- Header -->
+                <div class="register-gradient px-8 py-12 text-white">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h1 class="text-3xl font-bold mb-2">Daftar Akun Baru</h1>
+                        <p class="text-blue-100">Bergabunglah dengan ribuan pembaca kami</p>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="px-8 py-8">
+                    @if($errors->any())
+                        <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+                            <div class="flex">
+                                <i class="fas fa-exclamation-circle mt-1 mr-3"></i>
+                                <div>
+                                    <p class="font-semibold mb-2">Pendaftaran Gagal</p>
+                                    @foreach($errors->all() as $error)
+                                        <p class="text-sm">{{ $error }}</p>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('register.post') }}" class="space-y-5">
+                        @csrf
+
+                        <!-- Name Input -->
+                        <div>
+                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-user text-blue-600 mr-2"></i>Nama Lengkap
+                            </label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg input-focus transition bg-gray-50"
+                                placeholder="Nama lengkap Anda"
+                                value="{{ old('name') }}"
+                                required
+                                autocomplete="name"
+                            >
+                        </div>
+
+                        <!-- Email Input -->
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-envelope text-blue-600 mr-2"></i>Email
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg input-focus transition bg-gray-50"
+                                placeholder="nama@email.com"
+                                value="{{ old('email') }}"
+                                required
+                                autocomplete="email"
+                            >
+                        </div>
+
+                        <!-- Password Input -->
+                        <div>
+                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-lock text-blue-600 mr-2"></i>Password
+                            </label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg input-focus transition bg-gray-50"
+                                placeholder="Minimal 6 karakter"
+                                required
+                                autocomplete="new-password"
+                            >
+                            <p class="text-xs text-gray-500 mt-1">Gunakan kombinasi huruf, angka, dan simbol untuk keamanan maksimal</p>
+                        </div>
+
+                        <!-- Confirm Password Input -->
+                        <div>
+                            <label for="password_confirmation" class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-lock text-blue-600 mr-2"></i>Konfirmasi Password
+                            </label>
+                            <input 
+                                type="password" 
+                                id="password_confirmation" 
+                                name="password_confirmation" 
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg input-focus transition bg-gray-50"
+                                placeholder="Masukkan ulang password"
+                                required
+                                autocomplete="new-password"
+                            >
+                        </div>
+
+                        <!-- Register Button -->
+                        <button 
+                            type="submit" 
+                            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2.5 rounded-lg font-bold hover:shadow-lg transition transform hover:scale-105 duration-200 mt-6"
+                        >
+                            <i class="fas fa-user-check mr-2"></i> Daftar Sekarang
+                        </button>
+                    </form>
+
+                    <!-- Login Link -->
+                    <div class="mt-6 text-center pt-6 border-t border-gray-200">
+                        <p class="text-gray-600">
+                            Sudah punya akun? 
+                            <a href="{{ route('login') }}" class="text-blue-600 font-bold hover:text-blue-700 transition">
+                                Login di sini
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Benefits -->
+                <div class="px-8 py-6 bg-gradient-to-r from-blue-50 to-purple-50 border-t border-gray-200">
+                    <p class="text-sm font-semibold text-gray-700 mb-3">
+                        <i class="fas fa-star text-yellow-500 mr-2"></i>Keuntungan Menjadi Member:
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <div class="flex items-start">
+                            <i class="fas fa-check text-green-600 mr-2 mt-0.5 flex-shrink-0"></i>
+                            <span>Akses ribuan buku dari koleksi lengkap</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check text-green-600 mr-2 mt-0.5 flex-shrink-0"></i>
+                            <span>Peminjaman tanpa biaya tambahan</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check text-green-600 mr-2 mt-0.5 flex-shrink-0"></i>
+                            <span>Tracking riwayat peminjaman otomatis</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check text-green-600 mr-2 mt-0.5 flex-shrink-0"></i>
+                            <span>Notifikasi deadline dan rekomendasi buku</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Text -->
+            <div class="text-center mt-8 text-sm text-gray-600">
+                <p>Dengan mendaftar, Anda menyetujui <a href="#" class="text-blue-600 hover:underline">Syarat & Ketentuan</a> dan <a href="#" class="text-blue-600 hover:underline">Kebijakan Privasi</a> kami</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center text-sm">
+                <p>&copy; 2024 Aplikasi Peminjaman Buku. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Auto-hide alerts
+        const alerts = document.querySelectorAll('[role="alert"]');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
