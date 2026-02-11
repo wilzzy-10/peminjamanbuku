@@ -399,7 +399,7 @@
                     <i class="fas fa-check-square"></i> Persetujuan & Verifikasi
                 </h2>
                 <div class="actions-grid">
-                    <a href="{{ route('loans.index', ['status' => 'pending']) }}" class="action-card green">
+                    <a href="{{ route('petugas.approvals.index') }}" class="action-card green">
                         <div class="action-icon">
                             <i class="fas fa-clipboard-check"></i>
                         </div>
@@ -410,7 +410,7 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('loans.index', ['status' => 'active']) }}" class="action-card green">
+                    <a href="{{ route('petugas.returns.verification') }}" class="action-card green">
                         <div class="action-icon">
                             <i class="fas fa-search-plus"></i>
                         </div>
@@ -421,7 +421,7 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('loans.index', ['status' => 'overdue']) }}" class="action-card red">
+                    <a href="{{ route('petugas.overdue.monitor') }}" class="action-card red">
                         <div class="action-icon">
                             <i class="fas fa-clock"></i>
                         </div>
@@ -440,7 +440,7 @@
                 <i class="fas fa-file-alt"></i> Laporan & Statistik
             </h2>
             <div class="actions-grid">
-                <a href="#" class="action-card orange">
+                <a href="{{ route('petugas.reports.loans') }}" class="action-card orange">
                     <div class="action-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
@@ -451,7 +451,7 @@
                     </div>
                 </a>
 
-                <a href="#" class="action-card orange">
+                <a href="{{ route('petugas.reports.export') }}" class="action-card orange">
                     <div class="action-icon">
                         <i class="fas fa-file-pdf"></i>
                     </div>

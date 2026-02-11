@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -31,7 +32,12 @@ class BookController extends Controller
             'publisher' => 'nullable|string|max:255',
             'year' => 'nullable|integer|min:1000|max:' . date('Y'),
             'quantity' => 'required|integer|min:1',
+            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($request->hasFile('cover_image')) {
+            $validated['cover_image'] = $request->file('cover_image')->store('books/covers', 'public');
+        }
 
         $validated['available_quantity'] = $validated['quantity'];
 
@@ -44,6 +50,15 @@ class BookController extends Controller
     {
         $book->load('category', 'loans.user');
         return view('books.show', compact('book'));
+    }
+
+    public function cover(Book $book)
+    {
+        if (empty($book->cover_image) || !Storage::disk('public')->exists($book->cover_image)) {
+            abort(404);
+        }
+
+        return Storage::disk('public')->response($book->cover_image);
     }
 
     public function edit(Book $book)
@@ -63,7 +78,15 @@ class BookController extends Controller
             'publisher' => 'nullable|string|max:255',
             'year' => 'nullable|integer|min:1000|max:' . date('Y'),
             'quantity' => 'required|integer|min:1',
+            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($request->hasFile('cover_image')) {
+            if (!empty($book->cover_image) && Storage::disk('public')->exists($book->cover_image)) {
+                Storage::disk('public')->delete($book->cover_image);
+            }
+            $validated['cover_image'] = $request->file('cover_image')->store('books/covers', 'public');
+        }
 
         $quantityDiff = $validated['quantity'] - $book->quantity;
         $validated['available_quantity'] = $book->available_quantity + $quantityDiff;

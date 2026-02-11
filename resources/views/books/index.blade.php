@@ -4,12 +4,11 @@
 
 @section('content')
 <style>
-    /* Hero Section */
     .hero-section {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 60px 20px;
+        padding: 48px 20px;
         color: white;
-        margin-bottom: 40px;
+        margin-bottom: 28px;
         position: relative;
         overflow: hidden;
     }
@@ -17,10 +16,10 @@
     .hero-section::before {
         content: '';
         position: absolute;
-        top: -50%;
-        right: -10%;
-        width: 400px;
-        height: 400px;
+        top: -45%;
+        right: -8%;
+        width: 380px;
+        height: 380px;
         background: rgba(255, 255, 255, 0.1);
         border-radius: 50%;
     }
@@ -30,98 +29,70 @@
         z-index: 1;
         max-width: 1200px;
         margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 28px;
+        align-items: center;
     }
 
     .hero-title {
-        font-size: 3.5rem;
+        font-size: 3.1rem;
         font-weight: 800;
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         letter-spacing: -1px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 
     .hero-subtitle {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         opacity: 0.95;
         font-weight: 500;
-        max-width: 500px;
+        max-width: 560px;
+        line-height: 1.5;
     }
 
-    /* Container */
+    .hero-right {
+        position: relative;
+        min-height: 260px;
+        animation: floatTogether 8s ease-in-out infinite;
+        will-change: transform;
+    }
+
+    .hero-visual-main {
+        overflow: hidden;
+        min-height: 250px;
+    }
+
+    .hero-visual-main svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .hero-visual-search {
+        position: absolute;
+        left: 205px;
+        top: 115px;
+        width: 38%;
+        overflow: hidden;
+        min-height: 165px;
+        filter: drop-shadow(0 12px 18px rgba(40, 54, 145, 0.22));
+    }
+
+    .hero-visual-search svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
     .books-container {
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 20px;
     }
 
-    /* Search & Filter */
-    .search-section {
-        background: white;
-        border-radius: 18px;
-        padding: 30px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-        margin-bottom: 40px;
-    }
-
-    .search-form {
-        display: flex;
-        gap: 15px;
-        align-items: flex-end;
-        flex-wrap: wrap;
-    }
-
-    .search-group {
-        flex: 1;
-        min-width: 250px;
-    }
-
-    .search-group label {
-        display: block;
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 8px;
-        font-size: 0.95rem;
-    }
-
-    .search-group input,
-    .search-group select {
-        width: 100%;
-        padding: 12px 16px;
-        border: 2px solid #e8e8e8;
-        border-radius: 10px;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        font-family: inherit;
-    }
-
-    .search-group input:focus,
-    .search-group select:focus {
-        outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-
-    .btn-search {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 12px 36px;
-        border: none;
-        border-radius: 10px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        white-space: nowrap;
-    }
-
-    .btn-search:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-    }
-
-    /* Books Grid */
     .books-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -325,6 +296,11 @@
         padding: 12px 28px;
         display: inline-flex;
         box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        align-items: center;
+        gap: 8px;
     }
 
     .btn-add:hover {
@@ -332,7 +308,6 @@
         box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
     }
 
-    /* Empty State */
     .empty-state {
         background: white;
         border-radius: 18px;
@@ -376,27 +351,27 @@
         box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
     }
 
-    /* Header Bar */
     .header-bar {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
-        margin-bottom: 30px;
+        margin-bottom: 24px;
         flex-wrap: wrap;
         gap: 20px;
     }
 
     @media (max-width: 768px) {
+        .hero-content {
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+
         .hero-title {
-            font-size: 2.5rem;
+            font-size: 2.35rem;
         }
 
         .hero-subtitle {
             font-size: 1rem;
-        }
-
-        .search-form {
-            flex-direction: column;
         }
 
         .books-grid {
@@ -404,61 +379,99 @@
             gap: 20px;
         }
 
-        .btn-search {
-            width: 100%;
+        .hero-visual-main {
+            min-height: 170px;
+        }
+
+        .hero-visual-search {
+            min-height: 102px;
+            width: 44%;
+            left: 44%;
+            top: 36%;
         }
 
         .header-bar {
             flex-direction: column;
-            align-items: flex-start;
+            align-items: stretch;
+        }
+    }
+
+    @keyframes floatTogether {
+        0% {
+            transform: translate(-8px, -6px);
+        }
+        25% {
+            transform: translate(6px, -4px);
+        }
+        50% {
+            transform: translate(10px, 7px);
+        }
+        75% {
+            transform: translate(-6px, 9px);
+        }
+        100% {
+            transform: translate(-8px, -6px);
         }
     }
 </style>
 
-<!-- Hero Section -->
 <div class="hero-section">
     <div class="hero-content">
-        <h1 class="hero-title">📚 Koleksi Buku</h1>
-        <p class="hero-subtitle">Jelajahi koleksi lengkap kami dan temukan buku favorit Anda</p>
+        <div>
+            <h1 class="hero-title"><i class="fas fa-books"></i> Koleksi Buku</h1>
+            <p class="hero-subtitle">Jelajahi koleksi lengkap kami dan temukan buku favorit Anda</p>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-visual-main">
+                <svg viewBox="0 0 520 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasi buku">
+                    <circle cx="260" cy="176" r="124" fill="#d7ecff" opacity="0.7"/>
+                    <rect x="125" y="90" width="200" height="180" rx="14" fill="#ffffff" stroke="#2b3f99" stroke-width="6"/>
+                    <line x1="150" y1="125" x2="280" y2="125" stroke="#2b3f99" stroke-width="6" stroke-linecap="round"/>
+                    <line x1="150" y1="155" x2="280" y2="155" stroke="#2b3f99" stroke-width="6" stroke-linecap="round"/>
+                    <line x1="150" y1="185" x2="255" y2="185" stroke="#2b3f99" stroke-width="6" stroke-linecap="round"/>
+                    <line x1="150" y1="215" x2="270" y2="215" stroke="#2b3f99" stroke-width="6" stroke-linecap="round"/>
+                    <rect x="95" y="120" width="45" height="130" rx="10" fill="#ffd166"/>
+                    <circle cx="118" cy="145" r="9" fill="#2b3f99"/>
+                    <circle cx="118" cy="175" r="9" fill="#2b3f99"/>
+                    <circle cx="118" cy="205" r="9" fill="#2b3f99"/>
+                    <rect x="235" y="105" width="16" height="32" rx="4" fill="#ef476f"/>
+                    <rect x="258" y="112" width="16" height="25" rx="4" fill="#fcbf49"/>
+                    <rect x="281" y="102" width="16" height="35" rx="4" fill="#06d6a0"/>
+                </svg>
+            </div>
+
+            <div class="hero-visual-search">
+                <svg viewBox="0 0 280 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasi pencarian">
+                    <circle cx="118" cy="96" r="70" fill="rgba(255,255,255,0.28)" stroke="#3f63d6" stroke-width="14"/>
+                    <line x1="165" y1="142" x2="232" y2="210" stroke="#3f63d6" stroke-width="18" stroke-linecap="round"/>
+                    <line x1="82" y1="76" x2="155" y2="76" stroke="rgba(63,99,214,0.72)" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="82" y1="100" x2="146" y2="100" stroke="rgba(63,99,214,0.72)" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="82" y1="124" x2="138" y2="124" stroke="rgba(63,99,214,0.72)" stroke-width="8" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="books-container">
-    <!-- Header with Add Button -->
-    <div class="header-bar">
-        <div></div>
-        @auth
-            @if(auth()->user()->isAdmin())
+    @auth
+        @if(auth()->user()->isAdmin())
+            <div class="header-bar">
                 <a href="{{ route('books.create') }}" class="btn-add">
                     <i class="fas fa-plus"></i> Tambah Buku
                 </a>
-            @endif
-        @endauth
-    </div>
-
-    <!-- Search Section -->
-    <div class="search-section">
-        <form action="{{ route('books.search') }}" method="GET" class="search-form">
-            <div class="search-group" style="flex: 2; min-width: 300px;">
-                <label for="q">Cari Buku</label>
-                <input type="text" id="q" name="q" placeholder="Judul, pengarang, atau ISBN..." 
-                       value="{{ request('q', '') }}">
             </div>
-            <button type="submit" class="btn-search">
-                <i class="fas fa-search"></i> Cari
-            </button>
-        </form>
-    </div>
+        @endif
+    @endauth
 
-    <!-- Books Grid -->
     @if($books->count() > 0)
         <div class="books-grid">
             @foreach($books as $book)
                 <div class="book-card">
-                    <!-- Book Cover -->
                     <div class="book-cover">
-                        @if($book->cover_image)
-                            <img src="{{ asset('storage/' . $book->cover_image) }}" alt="{{ $book->title }}">
+                        @if($book->display_cover_url)
+                            <img src="{{ $book->display_cover_url }}" alt="{{ $book->title }}">
                         @else
                             <div class="book-cover-empty">
                                 <i class="fas fa-book"></i>
@@ -467,7 +480,6 @@
                         @endif
                     </div>
 
-                    <!-- Book Info -->
                     <div class="book-info">
                         <div style="display: flex; gap: 8px; margin-bottom: 8px;">
                             @if($book->isAvailable())
@@ -496,7 +508,6 @@
                             </div>
                         </div>
 
-                        <!-- Actions -->
                         <div class="book-actions">
                             <a href="{{ route('books.show', $book) }}" class="btn btn-detail">
                                 <i class="fas fa-eye"></i> Detail
@@ -508,7 +519,7 @@
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
                                 @else
-                                    <a href="{{ $book->isAvailable() ? route('loans.create', ['book' => $book->id]) : '#' }}" 
+                                    <a href="{{ $book->isAvailable() ? route('loans.create', ['book' => $book->id]) : '#' }}"
                                        class="btn btn-borrow" {{ !$book->isAvailable() ? 'onclick=event.preventDefault()' : '' }}>
                                         <i class="fas fa-plus-circle"></i> Pinjam
                                     </a>
@@ -524,7 +535,6 @@
             @endforeach
         </div>
 
-        <!-- Pagination -->
         <div style="display: flex; justify-content: center; margin: 40px 0;">
             {{ $books->links() }}
         </div>
@@ -534,7 +544,7 @@
             <h3>Buku Tidak Ditemukan</h3>
             <p>Tidak ada buku yang cocok dengan pencarian Anda</p>
             <a href="{{ route('books.index') }}">
-                <i class="fas fa-home"></i> Kembali ke Koleksi
+                <i class="fas fa-home"></i> Lihat Koleksi
             </a>
         </div>
     @endif

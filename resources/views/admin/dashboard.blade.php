@@ -579,7 +579,7 @@
             </div>
             <div class="section-content">
                 <div class="reports-grid">
-                    <a href="#" class="report-card">
+                    <a href="{{ route('admin.reports.loans') }}" class="report-card">
                         <div class="report-card-icon">
                             <i class="fas fa-chart-bar"></i>
                         </div>
@@ -587,7 +587,7 @@
                         <div class="report-card-desc">Statistik peminjaman mendalam</div>
                     </a>
 
-                    <a href="#" class="report-card">
+                    <a href="{{ route('admin.reports.activity-logs') }}" class="report-card">
                         <div class="report-card-icon">
                             <i class="fas fa-history"></i>
                         </div>
@@ -595,7 +595,7 @@
                         <div class="report-card-desc">Riwayat aktivitas pengguna</div>
                     </a>
 
-                    <a href="#" class="report-card">
+                    <a href="{{ route('admin.reports.loans') }}" class="report-card">
                         <div class="report-card-icon">
                             <i class="fas fa-file-pdf"></i>
                         </div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 
 // Redirect root to welcome or dashboard based on auth
 Route::get('/', function () {
@@ -19,7 +20,8 @@ Route::get('/', function () {
 // Public routes
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
-Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
+Route::get('/books/{book}/cover', [BookController::class, 'cover'])->whereNumber('book')->name('books.cover');
+Route::get('/books/{book}', [BookController::class, 'show'])->whereNumber('book')->name('books.show');
 
 // Guest routes
 Route::middleware('guest')->group(function () {
@@ -59,6 +61,11 @@ Route::middleware('auth')->group(function () {
 
     // Petugas routes - Approval & Verification
     Route::middleware('petugas')->group(function () {
+        // Petugas workspaces
+        Route::get('/petugas/persetujuan', [LoanController::class, 'approvalWorkspace'])->name('petugas.approvals.index');
+        Route::get('/petugas/verifikasi-pengembalian', [LoanController::class, 'returnVerificationWorkspace'])->name('petugas.returns.verification');
+        Route::get('/petugas/monitor-keterlambatan', [LoanController::class, 'overdueMonitoringWorkspace'])->name('petugas.overdue.monitor');
+
         // Loan approval & verification
         Route::get('/loans', [LoanController::class, 'index'])->name('loans.index');
         Route::put('/loans/{loan}/approve', [LoanController::class, 'approve'])->name('loans.approve');
@@ -66,9 +73,9 @@ Route::middleware('auth')->group(function () {
         Route::put('/loans/{loan}/verify-return', [LoanController::class, 'verifyReturn'])->name('loans.verify-return');
 
         // Reports
-        Route::get('/reports/loans', function () {
-            return view('petugas.reports.loans');
-        })->name('reports.loans');
+        Route::get('/petugas/reports/loans', [ReportController::class, 'loanReport'])->name('petugas.reports.loans');
+        Route::get('/petugas/reports/export', [ReportController::class, 'loanExportPage'])->name('petugas.reports.export');
+        Route::get('/petugas/reports/export/csv', [ReportController::class, 'exportLoansCsv'])->name('petugas.reports.export.csv');
     });
 
     // Admin routes
@@ -85,21 +92,14 @@ Route::middleware('auth')->group(function () {
         // Category management
         Route::resource('categories', CategoryController::class);
 
-        // Loan management (full access)
-        Route::get('/loans', [LoanController::class, 'index'])->name('loans.index');
-        Route::put('/loans/{loan}/approve', [LoanController::class, 'approve'])->name('loans.approve');
-        Route::put('/loans/{loan}/reject', [LoanController::class, 'reject'])->name('loans.reject');
+        // Loan management (admin-only action)
         Route::put('/loans/{loan}/admin-return', [LoanController::class, 'adminReturn'])->name('loans.admin-return');
 
         // User management
         Route::resource('users', UserController::class);
 
         // Reports
-        Route::get('/reports/loans', function () {
-            return view('admin.reports.loans');
-        })->name('reports.loans');
-        Route::get('/reports/activity-logs', function () {
-            return view('admin.reports.activity-logs');
-        })->name('reports.activity-logs');
+        Route::get('/reports/loans', [ReportController::class, 'loanReport'])->name('admin.reports.loans');
+        Route::get('/reports/activity-logs', [ReportController::class, 'activityLogs'])->name('admin.reports.activity-logs');
     });
 });

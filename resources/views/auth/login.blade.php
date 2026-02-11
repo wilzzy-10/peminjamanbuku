@@ -136,27 +136,6 @@
                         </p>
                     </div>
                 </div>
-
-                <!-- Demo Credentials -->
-                <div class="px-8 py-6 bg-gray-50 border-t border-gray-200">
-                    <p class="text-sm font-semibold text-gray-700 mb-3">
-                        <i class="fas fa-info-circle text-blue-600 mr-2"></i>Akun Demo untuk Testing:
-                    </p>
-                    <div class="space-y-2 text-smtext-gray-600">
-                        <div class="p-2 bg-white rounded border border-gray-200">
-                            <p class="font-mono text-xs"><strong>Admin:</strong> admin@peminjamanbuku.com</p>
-                        </div>
-                        <div class="p-2 bg-white rounded border border-gray-200">
-                            <p class="font-mono text-xs"><strong>Petugas:</strong> petugas@peminjamanbuku.com</p>
-                        </div>
-                        <div class="p-2 bg-white rounded border border-gray-200">
-                            <p class="font-mono text-xs"><strong>User:</strong> john@example.com</p>
-                        </div>
-                        <div class="p-2 bg-white rounded border border-gray-200">
-                            <p class="font-mono text-xs"><strong>Password:</strong> password123</p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Footer Text -->
@@ -186,3 +165,5 @@
     </script>
 </body>
 </html>
+
+

@@ -312,6 +312,47 @@
                 padding: 10px 12px;
             }
         }
+
+        .back-nav-wrapper {
+            max-width: 1400px;
+            margin: 8px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .back-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(102, 126, 234, 0.35);
+            color: #ffffff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            box-shadow: 0 10px 26px rgba(102, 126, 234, 0.28);
+            transition: all 0.25s ease;
+        }
+
+        .back-nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(102, 126, 234, 0.35);
+            filter: brightness(1.03);
+        }
+
+        .back-nav-btn i {
+            width: 18px;
+            text-align: center;
+        }
+
+        .back-nav-btn .label-sub {
+            opacity: 0.86;
+            font-size: 0.78rem;
+            font-weight: 500;
+        }
     </style>
     
     <!-- Additional Styles -->
@@ -330,28 +371,24 @@
                 </a>
 
                 <!-- Navigation Links -->
-                <div class="navbar-links">
-                    <a href="{{ route('books.index') }}" class="navbar-link">
-                        <i class="fas fa-book-open"></i>
-                        <span>Koleksi</span>
-                    </a>
-                    <a href="{{ route('loans.my-loans') }}" class="navbar-link">
-                        <i class="fas fa-bookmark"></i>
-                        <span>Peminjaman</span>
-                    </a>
-                    @if(auth()->user()->isAdmin())
-                        <a href="{{ route('dashboard') }}" class="navbar-link">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <span>Admin</span>
+                @if(!auth()->user()->isAdmin())
+                    <div class="navbar-links">
+                        <a href="{{ route('books.index') }}" class="navbar-link">
+                            <i class="fas fa-book-open"></i>
+                            <span>Koleksi</span>
                         </a>
-                    @endif
-                    @if(auth()->user()->isPetugas())
-                        <a href="{{ route('loans.index') }}" class="navbar-link">
-                            <i class="fas fa-tasks"></i>
-                            <span>Verifikasi</span>
+                        <a href="{{ route('loans.my-loans') }}" class="navbar-link">
+                            <i class="fas fa-bookmark"></i>
+                            <span>Peminjaman</span>
                         </a>
-                    @endif
-                </div>
+                        @if(auth()->user()->isPetugas())
+                            <a href="{{ route('petugas.approvals.index') }}" class="navbar-link">
+                                <i class="fas fa-tasks"></i>
+                                <span>Verifikasi</span>
+                            </a>
+                        @endif
+                    </div>
+                @endif
 
                 <div class="navbar-user">
                     <button class="user-button">
@@ -404,6 +441,18 @@
     <div class="min-h-screen flex flex-col">
         <!-- Main Content -->
         <main class="flex-1">
+            @auth
+                @if(auth()->user()->isAdmin() && !request()->routeIs('dashboard') && !request()->routeIs('books.*'))
+                    <div class="back-nav-wrapper">
+                        <a href="{{ route('dashboard') }}" class="back-nav-btn">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>
+                                <span style="display:block; line-height:1;">Kembali</span>
+                            </span>
+                        </a>
+                    </div>
+                @endif
+            @endauth
             @yield('content')
         </main>
         

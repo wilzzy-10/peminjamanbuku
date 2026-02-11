@@ -374,8 +374,8 @@
         <div class="book-cover-section">
             <!-- Cover -->
             <div class="book-cover">
-                @if($book->cover_image)
-                    <img src="{{ asset('storage/' . $book->cover_image) }}" alt="{{ $book->title }}">
+                @if($book->display_cover_url)
+                    <img src="{{ $book->display_cover_url }}" alt="{{ $book->title }}">
                 @else
                     <div class="book-cover-empty">
                         <i class="fas fa-book"></i>

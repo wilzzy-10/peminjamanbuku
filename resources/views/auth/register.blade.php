@@ -30,13 +30,6 @@
                         <span class="text-2xl font-bold text-gray-800 group-hover:text-blue-600 transition">Perpustakaan</span>
                     </a>
                 </div>
-
-                <!-- Center Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/" class="text-gray-600 hover:text-blue-600 font-medium transition">Beranda</a>
-                    <a href="{{ route('books.index') }}" class="text-gray-600 hover:text-blue-600 font-medium transition">Koleksi Buku</a>
-                </div>
-
                 <!-- Auth Buttons (Right Top) -->
                 <div class="flex items-center space-x-3">
                     <a href="{{ route('login') }}" class="px-4 py-2 text-blue-600 font-semibold hover:text-blue-700 transition">
@@ -225,3 +218,4 @@
     </script>
 </body>
 </html>
+

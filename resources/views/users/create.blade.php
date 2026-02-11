@@ -4,362 +4,425 @@
 
 @section('content')
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .form-container {
-        min-height: 100vh;
-        padding: 40px 20px;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    }
-
-    .form-wrapper {
-        max-width: 700px;
+    .user-form-page {
+        max-width: 1100px;
         margin: 0 auto;
+        padding: 30px 16px;
     }
 
-    .form-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 15px;
-        padding: 40px;
-        color: white;
-        margin-bottom: 30px;
-        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.2);
-        animation: slideDown 0.6s ease-out;
+    .user-form-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        gap: 24px;
     }
 
-    .form-header h1 {
-        font-size: 2.2rem;
+    .user-main-card {
+        background: #ffffff;
+        border-radius: 14px;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        overflow: hidden;
+    }
+
+    .user-main-header {
+        padding: 20px 24px;
+        background: linear-gradient(90deg, #2563eb 0%, #4338ca 100%);
+        color: #ffffff;
+    }
+
+    .user-main-header h1 {
+        margin: 0;
+        font-size: 1.6rem;
         font-weight: 700;
-        margin-bottom: 8px;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
     }
 
-    .form-header p {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 0.95rem;
+    .user-main-header p {
+        margin: 8px 0 0;
+        color: #dbeafe;
+        font-size: 0.92rem;
     }
 
-    .form-card {
-        background: white;
-        border-radius: 15px;
-        padding: 40px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        animation: fadeInUp 0.6s ease-out;
+    .user-form {
+        padding: 24px;
     }
 
-    .form-group {
-        margin-bottom: 25px;
+    .user-field {
+        margin-bottom: 18px;
     }
 
-    .form-group label {
-        display: block;
-        font-weight: 700;
-        color: #2d3748;
-        margin-bottom: 10px;
-        font-size: 0.95rem;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        width: 100%;
-        padding: 14px;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-        font-family: inherit;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-        outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-
-    .form-group textarea {
-        resize: vertical;
-        min-height: 100px;
-    }
-
-    .form-row {
+    .user-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        gap: 16px;
+        margin-bottom: 18px;
     }
 
-    .form-row .form-group {
+    .user-field:last-child,
+    .user-row:last-of-type {
         margin-bottom: 0;
     }
 
-    .help-text {
-        font-size: 0.85rem;
-        color: #718096;
+    .user-field label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: #374151;
+    }
+
+    .user-field input,
+    .user-field textarea,
+    .user-field select {
+        width: 100%;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        padding: 11px 14px;
+        font-size: 0.95rem;
+        background: #ffffff;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .user-field input:focus,
+    .user-field textarea:focus,
+    .user-field select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .user-field textarea {
+        min-height: 95px;
+        resize: vertical;
+    }
+
+    .field-invalid {
+        border-color: #f87171 !important;
+    }
+
+    .field-help {
+        color: #6b7280;
+        font-size: 0.8rem;
         margin-top: 6px;
     }
 
-    .form-actions {
-        display: flex;
-        gap: 15px;
-        margin-top: 40px;
+    .error-box {
+        border: 1px solid #fecaca;
+        background: #fef2f2;
+        color: #b91c1c;
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin-bottom: 18px;
+        font-size: 0.9rem;
     }
 
-    .form-btn {
-        flex: 1;
-        padding: 14px;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
+    .error-box p {
+        margin: 0 0 8px;
+        font-weight: 700;
+    }
+
+    .error-box ul {
+        margin: 0;
+        padding-left: 18px;
+    }
+
+    .user-actions {
         display: flex;
+        gap: 12px;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 18px;
+        margin-top: 18px;
+    }
+
+    .user-btn {
+        flex: 1;
+        border: 0;
+        border-radius: 10px;
+        padding: 11px 14px;
+        font-weight: 700;
+        font-size: 0.94rem;
+        text-decoration: none;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .user-btn-primary {
+        background: #2563eb;
+        color: #ffffff;
+    }
+
+    .user-btn-primary:hover {
+        background: #1d4ed8;
+    }
+
+    .user-btn-muted {
+        background: #e5e7eb;
+        color: #374151;
+    }
+
+    .user-btn-muted:hover {
+        background: #d1d5db;
+    }
+
+    .user-side {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .user-side-card {
+        background: #ffffff;
+        border: 1px solid #f3f4f6;
+        border-radius: 14px;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+        padding: 18px;
+    }
+
+    .user-side-card h2,
+    .user-side-card h3 {
+        margin: 0 0 10px;
         font-size: 1rem;
-        text-decoration: none;
+        font-weight: 700;
+        color: #1f2937;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
-    .btn-submit {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    .user-side-card h2 i {
+        color: #f59e0b;
     }
 
-    .btn-submit:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-cancel {
-        background: #e2e8f0;
-        color: #4a5568;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-cancel:hover {
-        background: #cbd5e0;
-        transform: translateY(-2px);
-    }
-
-    .error-message {
-        background: linear-gradient(135deg, rgba(245, 101, 101, 0.1) 0%, rgba(229, 62, 62, 0.1) 100%);
-        color: #742a2a;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 25px;
-        border-left: 4px solid #f56565;
-    }
-
-    .error-list {
-        list-style: none;
+    .user-side-card p,
+    .user-side-card li {
         margin: 0;
-        padding: 0;
+        color: #4b5563;
+        font-size: 0.9rem;
+        line-height: 1.55;
     }
 
-    .error-list li {
-        padding: 4px 0;
+    .user-side-card .example-list p + p {
+        margin-top: 6px;
     }
 
-    .error-list li::before {
-        content: "• ";
-        color: #f56565;
-        font-weight: bold;
-        margin-right: 8px;
+    .user-side-card.user-role-info {
+        background: #eff6ff;
+        border-color: #dbeafe;
     }
 
-    @media (max-width: 768px) {
-        .form-container {
-            padding: 20px 15px;
-        }
+    .user-side-card.user-role-info h3 {
+        color: #1e3a8a;
+        display: block;
+    }
 
-        .form-header {
-            padding: 30px 20px;
-        }
+    .user-side-card.user-role-info ul {
+        margin: 0;
+        padding-left: 18px;
+        color: #1e40af;
+        font-size: 0.9rem;
+    }
 
-        .form-header h1 {
-            font-size: 1.6rem;
-        }
+    .user-side-card.user-role-info li + li {
+        margin-top: 4px;
+    }
 
-        .form-card {
-            padding: 25px;
-        }
-
-        .form-row {
+    @media (max-width: 980px) {
+        .user-form-layout {
             grid-template-columns: 1fr;
         }
+    }
 
-        .form-actions {
+    @media (max-width: 720px) {
+        .user-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .user-main-header,
+        .user-form {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .user-actions {
             flex-direction: column;
-        }
-    }
-
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
         }
     }
 </style>
 
-<div class="form-container">
-    <div class="form-wrapper">
-        <!-- Header -->
-        <div class="form-header">
-            <h1>
-                <i class="fas fa-user-plus"></i> Tambah Pengguna Baru
-            </h1>
-            <p>Buat akun pengguna baru untuk admin, petugas, atau member</p>
-        </div>
+<div class="user-form-page">
+    <div class="user-form-layout">
+        <div class="user-main-card">
+            <div class="user-main-header">
+                <h1>
+                    <i class="fas fa-user-plus"></i>
+                    Tambah Pengguna Baru
+                </h1>
+                <p>Isi data berikut untuk membuat akun admin, petugas, atau member.</p>
+            </div>
 
-        <!-- Form -->
-        <div class="form-card">
-            @if($errors->any())
-                <div class="error-message">
-                    <strong><i class="fas fa-exclamation-circle"></i> Ada kesalahan!</strong>
-                    <ul class="error-list">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('users.store') }}">
+            <form method="POST" action="{{ route('users.store') }}" class="user-form">
                 @csrf
 
-                <!-- Name -->
-                <div class="form-group">
-                    <label for="name">Nama Lengkap <span style="color: #f56565;">*</span></label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        name="name" 
-                        placeholder="Masukkan nama lengkap"
+                @if($errors->any())
+                    <div class="error-box">
+                        <p><i class="fas fa-exclamation-circle"></i> Ada data yang belum valid:</p>
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <div class="user-field">
+                    <label for="name">Nama Lengkap <span style="color:#ef4444">*</span></label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
                         value="{{ old('name') }}"
+                        placeholder="Masukkan nama lengkap"
                         required
+                        class="@error('name') field-invalid @enderror"
                     >
                 </div>
 
-                <!-- Email & Phone -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="email">Email <span style="color: #f56565;">*</span></label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            placeholder="contoh@email.com"
+                <div class="user-row">
+                    <div class="user-field">
+                        <label for="email">Email <span style="color:#ef4444">*</span></label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
                             value="{{ old('email') }}"
+                            placeholder="contoh@email.com"
                             required
+                            class="@error('email') field-invalid @enderror"
                         >
                     </div>
-                    <div class="form-group">
+
+                    <div class="user-field">
                         <label for="phone">No. Telp</label>
-                        <input 
-                            type="text" 
-                            id="phone" 
-                            name="phone" 
-                            placeholder="08xxxxxxxxxx"
+                        <input
+                            type="text"
+                            id="phone"
+                            name="phone"
                             value="{{ old('phone') }}"
+                            placeholder="08xxxxxxxxxx"
+                            class="@error('phone') field-invalid @enderror"
                         >
                     </div>
                 </div>
 
-                <!-- Password & Confirm -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="password">Password <span style="color: #f56565;">*</span></label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
+                <div class="user-row">
+                    <div class="user-field">
+                        <label for="password">Password <span style="color:#ef4444">*</span></label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
                             placeholder="Minimal 8 karakter"
                             required
+                            class="@error('password') field-invalid @enderror"
                         >
-                        <p class="help-text">Minimal 8 karakter</p>
+                        <p class="field-help">Minimal 8 karakter.</p>
                     </div>
-                    <div class="form-group">
-                        <label for="password_confirmation">Konfirmasi Password <span style="color: #f56565;">*</span></label>
-                        <input 
-                            type="password" 
-                            id="password_confirmation" 
-                            name="password_confirmation" 
+
+                    <div class="user-field">
+                        <label for="password_confirmation">Konfirmasi Password <span style="color:#ef4444">*</span></label>
+                        <input
+                            type="password"
+                            id="password_confirmation"
+                            name="password_confirmation"
                             placeholder="Ulangi password"
                             required
                         >
                     </div>
                 </div>
 
-                <!-- Address -->
-                <div class="form-group">
+                <div class="user-field">
                     <label for="address">Alamat</label>
-                    <textarea 
-                        id="address" 
-                        name="address" 
+                    <textarea
+                        id="address"
+                        name="address"
+                        rows="3"
                         placeholder="Masukkan alamat lengkap"
+                        class="@error('address') field-invalid @enderror"
                     >{{ old('address') }}</textarea>
                 </div>
 
-                <!-- Role & Status -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="role">Role <span style="color: #f56565;">*</span></label>
-                        <select id="role" name="role" required>
+                <div class="user-row">
+                    <div class="user-field">
+                        <label for="role">Role <span style="color:#ef4444">*</span></label>
+                        <select
+                            id="role"
+                            name="role"
+                            required
+                            class="@error('role') field-invalid @enderror"
+                        >
                             <option value="">-- Pilih Role --</option>
                             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                             <option value="petugas" {{ old('role') == 'petugas' ? 'selected' : '' }}>Petugas</option>
                             <option value="member" {{ old('role') == 'member' ? 'selected' : '' }}>Member</option>
                         </select>
-                        <p class="help-text">
-                            <strong>Admin:</strong> Akses penuh | 
-                            <strong>Petugas:</strong> Verifikasi peminjaman | 
-                            <strong>Member:</strong> Peminjam
-                        </p>
                     </div>
-                    <div class="form-group">
-                        <label for="status">Status <span style="color: #f56565;">*</span></label>
-                        <select id="status" name="status" required>
-                            <option value="">-- Pilih Status --</option>
-                            <option value="active" {{ old('status') == 'active' ? 'selected' : 'selected' }}>Aktif</option>
+
+                    <div class="user-field">
+                        <label for="status">Status <span style="color:#ef4444">*</span></label>
+                        <select
+                            id="status"
+                            name="status"
+                            required
+                            class="@error('status') field-invalid @enderror"
+                        >
+                            <option value="active" {{ old('status', 'active') == 'active' ? 'selected' : '' }}>Aktif</option>
                             <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Non-Aktif</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Actions -->
-                <div class="form-actions">
-                    <button type="submit" class="form-btn btn-submit">
-                        <i class="fas fa-save"></i> Simpan Pengguna
+                <div class="user-actions">
+                    <button type="submit" class="user-btn user-btn-primary">
+                        <i class="fas fa-save"></i>
+                        Simpan Pengguna
                     </button>
-                    <a href="{{ route('users.index') }}" class="form-btn btn-cancel">
-                        <i class="fas fa-times"></i> Batal
+                    <a href="{{ route('users.index') }}" class="user-btn user-btn-muted">
+                        <i class="fas fa-times"></i>
+                        Batal
                     </a>
                 </div>
             </form>
+        </div>
+
+        <div class="user-side">
+            <div class="user-side-card">
+                <h2>
+                    <i class="fas fa-lightbulb"></i>
+                    Contoh Isian
+                </h2>
+                <div class="example-list">
+                    <p><strong>Nama:</strong> Budi Santoso</p>
+                    <p><strong>Email:</strong> budi@perpustakaan.id</p>
+                    <p><strong>Role:</strong> Petugas</p>
+                    <p><strong>Status:</strong> Aktif</p>
+                </div>
+            </div>
+
+            <div class="user-side-card user-role-info">
+                <h3>Hak Akses Role</h3>
+                <ul>
+                    <li><strong>Admin</strong>: kelola seluruh data.</li>
+                    <li><strong>Petugas</strong>: proses peminjaman/pengembalian.</li>
+                    <li><strong>Member</strong>: pinjam buku dan lihat riwayat.</li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

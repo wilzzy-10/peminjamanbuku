@@ -228,6 +228,18 @@
         border-left: 3px solid #667eea;
     }
 
+    .status-pending {
+        background: linear-gradient(135deg, rgba(246, 173, 85, 0.15) 0%, rgba(237, 137, 54, 0.15) 100%);
+        color: #7b341e;
+        border-left: 3px solid #ed8936;
+    }
+
+    .status-rejected {
+        background: linear-gradient(135deg, rgba(160, 174, 192, 0.2) 0%, rgba(113, 128, 150, 0.2) 100%);
+        color: #2d3748;
+        border-left: 3px solid #718096;
+    }
+
     /* Action Buttons */
     .action-button {
         padding: 8px 16px;
@@ -469,6 +481,14 @@
                                     @if($loan->status === 'returned')
                                         <span class="status-badge status-returned">
                                             <i class="fas fa-check"></i> Dikembalikan
+                                        </span>
+                                    @elseif($loan->status === 'pending')
+                                        <span class="status-badge status-pending">
+                                            <i class="fas fa-hourglass-half"></i> Menunggu Persetujuan
+                                        </span>
+                                    @elseif($loan->status === 'rejected')
+                                        <span class="status-badge status-rejected">
+                                            <i class="fas fa-ban"></i> Ditolak
                                         </span>
                                     @elseif($loan->isOverdue())
                                         <span class="status-badge status-overdue">
